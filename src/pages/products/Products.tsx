@@ -141,7 +141,7 @@ const Products: React.FC = () => {
     {
       title: "Actions",
       key: "actions",
-      render: (text, record) => (
+      render: (record) => (
         <span>
           <Button type="link" onClick={() => handleModalOpen(record)}>
             Edit

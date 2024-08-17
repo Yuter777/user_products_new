@@ -29,7 +29,7 @@ interface ProductStore {
   searchProducts: (query: string) => void;
 }
 
-export const useProductStore = create<ProductStore>((set, get) => ({
+export const useProductStore = create<ProductStore>((set) => ({
   loading: false,
   products: [],
   filteredProducts: [],
@@ -117,7 +117,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       set({
         loading: false,
         error: (err as Error).message,
-      }); 
+      });
     }
   },
 

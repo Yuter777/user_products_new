@@ -92,7 +92,7 @@ const User: React.FC = () => {
         <Column
           title="Actions"
           key="actions"
-          render={(text, record: any) => (
+          render={(record: any) => (
             <Space size="middle">
               <Button onClick={() => handleEdit(record)}>Edit</Button>
               <Button danger onClick={() => handleDelete(record.id)}>
