@@ -104,30 +104,6 @@
         "https://example.com/images/echodot5-1.jpg",
         "https://example.com/images/echodot5-2.jpg"
       ]
-    },
-    {
-      "id": "g7cv58j51",
-      "title": "sqsx",
-      "description": "dccws",
-      "brand": "sdxcwds",
-      "category": "c sd",
-      "price": 6846,
-      "discountPercentage": 100,
-      "rating": 5,
-      "comments": "v escvw s",
-      "images": "vcwedscwsec"
-    },
-    {
-      "id": "7q2ngsz9b",
-      "title": "cawe",
-      "description": "cawe",
-      "brand": "cawe",
-      "category": "cawe",
-      "price": 684,
-      "discountPercentage": 4.2,
-      "rating": 5,
-      "comments": "cawe",
-      "images": "cawe"
     }
   ],
   "users": [
@@ -148,14 +124,6 @@
       "username": "dxwedcw",
       "password": "56465",
       "phone": "+99897456654"
-    }
-  ],
-  "register": [
-    {
-      "id": "1",
-      "username": "johndoe",
-      "email": "johndoe@gmail.com",
-      "password": "john1234"
     }
   ]
 }

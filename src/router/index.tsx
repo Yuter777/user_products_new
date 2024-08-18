@@ -1,28 +1,36 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { paths } from "./paths";
 import { Spin } from "antd";
 import { Suspense, lazy, FC } from "react";
 
-// Hamma sahifalar va layoutni lazy yuklash
-const withSuspense = (cb: () => Promise<{ default: FC }>) => {
-  const L = lazy(cb);
-
+const withSuspense = (Component: React.LazyExoticComponent<FC>) => {
   return (props: any) => (
-    <Suspense fallback={<Spin fullscreen />}>
-      <L {...props} />
+    <Suspense fallback={<Spin size="large" />}>
+      <Component {...props} />
     </Suspense>
   );
 };
 
-const Layout = withSuspense(() => import("../layout/layout"));
-const Dashboard = withSuspense(() => import("../pages/dashboard/Dashboard"));
-const Products = withSuspense(() => import("../pages/products/Products"));
-const Users = withSuspense(() => import("../pages/users/Users"));
-const Profile = withSuspense(() => import("../pages/profile/Profile"));
-const NotFound = withSuspense(() => import("../pages/not-found"));
+const Layout = withSuspense(lazy(() => import("../layout/layout")));
+const Dashboard = withSuspense(
+  lazy(() => import("../pages/dashboard/Dashboard"))
+);
+const Products = withSuspense(lazy(() => import("../pages/products/Products")));
+const Users = withSuspense(lazy(() => import("../pages/users/Users")));
+const Profile = withSuspense(lazy(() => import("../pages/profile/Profile")));
+const NotFound = withSuspense(lazy(() => import("../pages/not-found")));
+const Login = withSuspense(lazy(() => import("../pages/Login/Login")));
+const SignUp = withSuspense(lazy(() => import("../pages/SignUp/SignUp")));
 
-// Router konfiguratsiyasi
 export const routes = createBrowserRouter([
+  {
+    path: paths.LOGIN,
+    element: <Login />,
+  },
+  {
+    path: paths.SIGNUP,
+    element: <SignUp />,
+  },
   {
     path: paths.HOME,
     element: <Layout />,
@@ -43,6 +51,10 @@ export const routes = createBrowserRouter([
         path: paths.PROFILE,
         element: <Profile />,
       },
+      {
+        path: paths.NOT_FOUND,
+        element: <NotFound />,
+      },
     ],
   },
   {
@@ -50,9 +62,3 @@ export const routes = createBrowserRouter([
     element: <NotFound />,
   },
 ]);
-
-const App: FC = () => {
-  return <RouterProvider router={routes} />;
-};
-
-export default App;

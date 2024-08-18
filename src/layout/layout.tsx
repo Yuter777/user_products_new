@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Layout, Menu, Space, theme } from "antd";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { HiChartPie } from "react-icons/hi";
 import { FaUsers, FaUserCircle } from "react-icons/fa";
 import { AiOutlineProduct } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import Item from "antd/es/list/Item";
+import { paths } from "../router/paths";
 
 const { Header, Sider, Content } = Layout;
 
@@ -15,15 +14,29 @@ const App: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const navigate = useNavigate();
+
+  // const handleLogout = () => {
+  //   // Bu yerda autentifikatsiya holatini tozalash logikasini amalga oshirasiz
+  //   // Masalan, tokenni localStorage'dan o'chirish
+  //   // localStorage.removeItem("authToken");
+  //   navigate(paths.LOGIN);
+  // };
 
   const menu = (
-    <Menu style={{ padding: "16px", overflowY: "hidden" }}>
-      <Item key="1" className="text-xl mb-2">
-        <Link to="/profile">Profile</Link>
-      </Item>
-      <Item key="2">
-        <Button>Logout</Button>
-      </Item>
+    <Menu>
+      <Menu.Item key="1">
+        <Link to={paths.PROFILE}>Profile</Link>
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          localStorage.removeItem("access_token");
+          navigate("/login");
+        }}
+      >
+        Logout
+      </Menu.Item>
     </Menu>
   );
 
@@ -31,7 +44,7 @@ const App: React.FC = () => {
     <Layout className="h-[100vh]">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <Link
-          to="/"
+          to={paths.HOME}
           className={`demo-logo-vertical flex items-center justify-center ${
             collapsed ? "p-2" : "p-5"
           }`}
@@ -47,30 +60,18 @@ const App: React.FC = () => {
           items={[
             {
               key: "1",
-              icon: (
-                <Link to="/">
-                  <HiChartPie size={20} />
-                </Link>
-              ),
-              label: <Link to="/">Dashboard</Link>,
+              icon: <HiChartPie size={20} />,
+              label: <Link to={paths.HOME}>Dashboard</Link>,
             },
             {
               key: "2",
-              icon: (
-                <Link to="/users">
-                  <FaUsers size={20} />
-                </Link>
-              ),
-              label: <Link to="/users">Users</Link>,
+              icon: <FaUsers size={20} />,
+              label: <Link to={paths.USERS}>Users</Link>,
             },
             {
               key: "3",
-              icon: (
-                <Link to="/products">
-                  <AiOutlineProduct size={20} />
-                </Link>
-              ),
-              label: <Link to="/products">Products</Link>,
+              icon: <AiOutlineProduct size={20} />,
+              label: <Link to={paths.PRODUCTS}>Products</Link>,
             },
           ]}
         />
@@ -78,7 +79,7 @@ const App: React.FC = () => {
       <Layout>
         <Header
           style={{ padding: 0, background: colorBgContainer }}
-          className="flex justify-between"
+          className="flex justify-between items-center"
         >
           <Button
             type="text"
@@ -90,8 +91,8 @@ const App: React.FC = () => {
               height: 64,
             }}
           />
-          <Dropdown overlay={menu} trigger={["click"]} className="mr-5">
-            <Space className="cursor-pointer">
+          <Dropdown overlay={menu} trigger={["click"]}>
+            <Space className="cursor-pointer mr-5">
               <FaUserCircle size={24} />
             </Space>
           </Dropdown>
@@ -100,10 +101,10 @@ const App: React.FC = () => {
           style={{
             margin: "24px 16px",
             padding: 24,
-            minHeight: "calc(100vh - 112px)", // Adjust height based on Header and margin sizes
+            minHeight: "calc(100vh - 112px)",
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
-            overflowY: "auto", // Make Content scrollable
+            overflowY: "auto",
           }}
         >
           <Outlet />
