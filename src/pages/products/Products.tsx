@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Input, Button, Table, Modal, Form, InputNumber } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useProductStore } from "../../app/productStore";
+import { useTranslation } from "react-i18next";
 
 const { Search } = Input;
 
@@ -19,6 +20,7 @@ interface Product {
 }
 
 const Products: React.FC = () => {
+  const { t } = useTranslation();
   const {
     loading,
     filteredProducts,
@@ -29,6 +31,7 @@ const Products: React.FC = () => {
     addProduct,
     searchProducts,
   } = useProductStore();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
@@ -73,11 +76,11 @@ const Products: React.FC = () => {
 
   const showDeleteConfirm = (id: string) => {
     Modal.confirm({
-      title: "Are you sure you want to delete this product?",
-      content: "This action cannot be undone.",
-      okText: "Yes, delete it",
+      title: t("Are you sure you want to delete this product?"),
+      content: t("This action cannot be undone."),
+      okText: t("Yes, delete it"),
       okType: "danger",
-      cancelText: "No, cancel",
+      cancelText: t("No, cancel"),
       onOk() {
         deleteProduct(id);
       },
@@ -91,6 +94,7 @@ const Products: React.FC = () => {
       value: brand,
     }));
   };
+
   const getUniqueCategory = () => {
     const categorys = filteredProducts.map((product) => product.category);
     return Array.from(new Set(categorys)).map((category) => ({
@@ -101,7 +105,7 @@ const Products: React.FC = () => {
 
   const columns: ColumnsType<Product> = [
     {
-      title: "Title",
+      title: t("Title"),
       dataIndex: "title",
       key: "title",
       render: (text: string) => (
@@ -111,14 +115,14 @@ const Products: React.FC = () => {
       ),
     },
     {
-      title: "Brand",
+      title: t("Brand"),
       dataIndex: "brand",
       key: "brand",
       filters: getUniqueBrands(),
       onFilter: (value, record) => record.brand.indexOf(value as string) === 0,
     },
     {
-      title: "Category",
+      title: t("Category"),
       dataIndex: "category",
       key: "category",
       filters: getUniqueCategory(),
@@ -126,32 +130,32 @@ const Products: React.FC = () => {
         record.category.indexOf(value as string) === 0,
     },
     {
-      title: "Price",
+      title: t("Price"),
       dataIndex: "price",
       key: "price",
       render: (text: number) => `$${text.toFixed(2)}`,
       sorter: (a, b) => a.price - b.price,
     },
     {
-      title: "Rating",
+      title: t("Rating"),
       dataIndex: "rating",
       key: "rating",
       sorter: (a, b) => a.rating - b.rating,
     },
     {
-      title: "Actions",
+      title: t("Actions"),
       key: "actions",
       render: (record) => (
         <span>
           <Button type="link" onClick={() => handleModalOpen(record)}>
-            Edit
+            {t("Edit")}
           </Button>
           <Button
             type="link"
             danger
             onClick={() => showDeleteConfirm(record.id)}
           >
-            Delete
+            {t("Delete")}
           </Button>
         </span>
       ),
@@ -161,7 +165,7 @@ const Products: React.FC = () => {
   return (
     <div style={{ padding: "20px" }}>
       <h1 style={{ textAlign: "center", fontSize: "30px" }}>
-        Products List ({filteredProducts.length})
+        {t("Products List")} ({filteredProducts.length})
       </h1>
       <div
         style={{
@@ -172,20 +176,20 @@ const Products: React.FC = () => {
       >
         <Search
           allowClear
-          placeholder="Search products"
+          placeholder={t("Search products")}
           onSearch={searchProducts}
           style={{ width: "300px" }}
         />
         <Button type="primary" onClick={() => handleModalOpen()}>
-          Add Product
+          {t("Add Product")}
         </Button>
       </div>
-      {loading && <h2>Loading...</h2>}
+      {loading && <h2>{t("Loading...")}</h2>}
       {error && <h2>{error}</h2>}
       <Table dataSource={filteredProducts} columns={columns} rowKey="id" />
 
       <Modal
-        title={isEditMode ? "Edit Product" : "Add Product"}
+        title={isEditMode ? t("Edit Product") : t("Add Product")}
         visible={isModalOpen}
         onCancel={handleModalClose}
         onOk={handleFormSubmit}
@@ -193,20 +197,20 @@ const Products: React.FC = () => {
         <Form form={form} layout="vertical">
           <Form.Item
             name="title"
-            label="Title"
+            label={t("Title")}
             rules={[
-              { required: true, message: "Please input the product title!" },
+              { required: true, message: t("Please input the product title!") },
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="description"
-            label="Description"
+            label={t("Description")}
             rules={[
               {
                 required: true,
-                message: "Please input the product description!",
+                message: t("Please input the product description!"),
               },
             ]}
           >
@@ -214,32 +218,34 @@ const Products: React.FC = () => {
           </Form.Item>
           <Form.Item
             name="brand"
-            label="Brand"
-            rules={[{ required: true, message: "Please input the brand!" }]}
+            label={t("Brand")}
+            rules={[{ required: true, message: t("Please input the brand!") }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="category"
-            label="Category"
-            rules={[{ required: true, message: "Please input the category!" }]}
+            label={t("Category")}
+            rules={[
+              { required: true, message: t("Please input the category!") },
+            ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="price"
-            label="Price"
-            rules={[{ required: true, message: "Please input the price!" }]}
+            label={t("Price")}
+            rules={[{ required: true, message: t("Please input the price!") }]}
           >
             <InputNumber min={0} style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item
             name="discountPercentage"
-            label="Discount Percentage"
+            label={t("Discount Percentage")}
             rules={[
               {
                 required: true,
-                message: "Please input the discount percentage!",
+                message: t("Please input the discount percentage!"),
               },
             ]}
           >
@@ -247,23 +253,23 @@ const Products: React.FC = () => {
           </Form.Item>
           <Form.Item
             name="rating"
-            label="Rating"
-            rules={[{ required: true, message: "Please input the rating!" }]}
+            label={t("Rating")}
+            rules={[{ required: true, message: t("Please input the rating!") }]}
           >
             <InputNumber min={0} max={5} step={0.1} style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item
             name="comments"
-            label="Comments"
-            rules={[{ required: true, message: "Please input comments!" }]}
+            label={t("Comments")}
+            rules={[{ required: true, message: t("Please input comments!") }]}
           >
             <Input.TextArea rows={2} />
           </Form.Item>
           <Form.Item
             name="images"
-            label="Images"
+            label={t("Images")}
             rules={[
-              { required: true, message: "Please input the image URLs!" },
+              { required: true, message: t("Please input the image URLs!") },
             ]}
           >
             <Input />

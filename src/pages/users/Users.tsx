@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Button, Table, Modal, Input, Form, Space } from "antd";
 import { useUserStore } from "../../app/userStore";
 import Search from "antd/es/input/Search";
+import { useTranslation } from "react-i18next";
 
 const { Column } = Table;
 
 const User: React.FC = () => {
+  const { t } = useTranslation();
   const {
     loading,
     users,
@@ -38,7 +40,9 @@ const User: React.FC = () => {
 
   const handleDelete = (id: string) => {
     Modal.confirm({
-      title: "Foydalanuvchini o'chirishni tasdiqlang",
+      title: "Are you sure you want to delete this user?",
+      okText: t("Yes, delete it"),
+      cancelText: t("No, cancel"),
       onOk: () => deleteUser(id),
     });
   };
@@ -65,7 +69,7 @@ const User: React.FC = () => {
   return (
     <div>
       <h1 style={{ textAlign: "center", fontSize: "30px" }}>
-        User List ({users.length})
+        {t("User List")} ({users.length})
       </h1>
       <Space
         style={{
@@ -76,27 +80,27 @@ const User: React.FC = () => {
       >
         <Search
           allowClear
-          placeholder="Search by First or Last Name"
+          placeholder={t("Search by First or Last Name")}
           onSearch={handleSearch}
           style={{ width: 300 }}
         />
         <Button type="primary" onClick={handleAdd}>
-          Add User
+          {t("Add User")}
         </Button>
       </Space>
       <Table dataSource={users} rowKey="id" loading={loading}>
-        <Column title="First Name" dataIndex="firstName" key="firstName" />
-        <Column title="Last Name" dataIndex="lastName" key="lastName" />
-        <Column title="Email" dataIndex="email" key="email" />
-        <Column title="Phone" dataIndex="phone" key="phone" />
+        <Column title={t("First Name")} dataIndex="firstName" key="firstName" />
+        <Column title={t("Last Name")} dataIndex="lastName" key="lastName" />
+        <Column title={t("Email")} dataIndex="email" key="email" />
+        <Column title={t("Phone")} dataIndex="phone" key="phone" />
         <Column
-          title="Actions"
+          title={t("Actions")}
           key="actions"
           render={(record: any) => (
             <Space size="middle">
-              <Button onClick={() => handleEdit(record)}>Edit</Button>
+              <Button onClick={() => handleEdit(record)}>{t("Edit")}</Button>
               <Button danger onClick={() => handleDelete(record.id)}>
-                Delete
+                {t("Delete")}
               </Button>
             </Space>
           )}
@@ -104,7 +108,7 @@ const User: React.FC = () => {
       </Table>
 
       <Modal
-        title={editingUser ? "Edit User" : "Add User"}
+        title={editingUser ? t("Edit User") : t("Add User")}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={() => setIsModalVisible(false)}
@@ -112,40 +116,44 @@ const User: React.FC = () => {
         <Form form={form} layout="vertical" name="userForm">
           <Form.Item
             name="firstName"
-            label="First Name"
+            label={t("First Name")}
             rules={[{ required: true }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="lastName"
-            label="Last Name"
+            label={t("Last Name")}
             rules={[{ required: true }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="email"
-            label="Email"
+            label={t("Email")}
             rules={[{ required: true, type: "email" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="username"
-            label="Username"
+            label={t("Username")}
             rules={[{ required: true }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="password"
-            label="Password"
+            label={t("Password")}
             rules={[{ required: true }]}
           >
             <Input.Password />
           </Form.Item>
-          <Form.Item name="phone" label="Phone" rules={[{ required: true }]}>
+          <Form.Item
+            name="phone"
+            label={t("Phone")}
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
         </Form>
