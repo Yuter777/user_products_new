@@ -53,5 +53,21 @@
   "Are you sure you want to delete this user?": "Bu foydalanuvchini o'chirishni istaysizmi?",
   "Search by First or Last Name": "Ism yoki familiya bo'yicha qidiring",
   "Username": "Foydalanuvchi nomi",
-  "Password": "Parol"
+  "Password": "Parol",
+
+  "Sign Up": "Ro'yxatdan o'tish",
+  "Please input your Email!": "Emailingizni kiriting!",
+  "Please enter a valid email!": "Yaroqli email kiriting!",
+  "Please input your Username!": "Foydalanuvchi nomini kiriting!",
+  "Please input your Password!": "Parolingizni kiriting!",
+  "Password must be at least 6 characters!": "Parol kamida 6 ta belgidan iborat bo'lishi kerak!",
+  "Please confirm your password!": "Parolingizni tasdiqlang!",
+  "The two passwords do not match!": "Ikkala parol mos kelmadi!",
+  "Register": "Ro'yxatdan o'tish",
+  "Already have an account?": "Hisobingiz bormi?",
+  "Log in": "Kirish",
+  "Login": "Kirish",
+  "Remember me": "Meni eslab qol",
+  "Don't have an account?": "Hisobingiz yo'qmi?",
+  "Confirm Password": "Parolni tasdiqlang"
 }

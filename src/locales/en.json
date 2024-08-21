@@ -55,6 +55,19 @@
   "Username": "Username",
   "Password": "Password",
 
-  "Dashboard": "Dashboard",
-  "Remember me": "Remember me"
+  "Please input your Email!": "Please input your Email!",
+  "Please enter a valid email!": "Please enter a valid email!",
+  "Please input your Username!": "Please input your Username!",
+  "Please input your Password!": "Please input your Password!",
+  "Password must be at least 6 characters!": "Password must be at least 6 characters!",
+  "Please confirm your password!": "Please confirm your password!",
+  "The two passwords do not match!": "The two passwords do not match!",
+  "Confirm Password": "Confirm Password",
+  "Register": "Register",
+  "Already have an account?": "Already have an account?",
+  "Log in": "Log in",
+  "Login": "Login",
+  "Remember me": "Remember me",
+  "Don't have an account?": "Don't have an account?",
+  "Sign Up": "Sign Up"
 }
