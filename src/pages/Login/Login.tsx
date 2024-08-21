@@ -3,14 +3,15 @@ import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../router/paths";
+import { useTranslation } from "react-i18next";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
 
+  const { t } = useTranslation();
+
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
-    // Authentication logikasini shu yerda amalga oshirasiz
-    // Muvaffaqiyatli kirgandan keyin dashboard sahifasiga yo'naltirish
     navigate(paths.HOME);
   };
 
@@ -27,19 +28,22 @@ const Login: React.FC = () => {
             name="username"
             rules={[{ required: true, message: "Please input your Username!" }]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Username" />
+            <Input prefix={<UserOutlined />} placeholder={t("Username")} />
           </Form.Item>
 
           <Form.Item
             name="password"
             rules={[{ required: true, message: "Please input your Password!" }]}
           >
-            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+            <Input.Password
+              prefix={<LockOutlined />}
+              placeholder={t("Password")}
+            />
           </Form.Item>
 
           <Form.Item>
             <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
+              <Checkbox>{t("Remember me")}</Checkbox>
             </Form.Item>
           </Form.Item>
 
